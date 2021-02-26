@@ -1,22 +1,13 @@
 const { readFileSync } = require('fs');
-const { Sequelize } = require('sequelize');
-const Importer = require('mysql-import');
+const importer = require('./importer');
+// const { Sequelize } = require('sequelize');
+// const Importer = require('mysql-import');
 
 describe('Desafios iniciais', () => {
   let sequelize;
 
   beforeAll(async () => {
-    const importer = new Importer(
-      { user: process.env.MYSQL_USER, password: process.env.MYSQL_PASSWORD, host: process.env.HOSTNAME }
-    );
-
-    await importer.import('./northwind.sql');
-
-    importer.disconnect();
-
-    sequelize = new Sequelize(
-      `mysql://${process.env.MYSQL_USER}:${process.env.MYSQL_PASSWORD}@${process.env.HOSTNAME}:3306/northwind`
-    );
+    sequelize = await importer();
   });
 
   afterAll(async () => {
