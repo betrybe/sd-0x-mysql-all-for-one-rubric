@@ -28,17 +28,8 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - name: Wait for build to succeed
-        uses: betrybe/action-wait-for-check@v2
-        id: wait-for-build
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          checkName: eslint
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-
       - name: Evaluator Step
         uses: betrybe/jest-evaluator-action@v5
-        if: steps.wait-for-build.outputs.conclusion == 'success'
         id: evaluator
         with:
           repository-test-name: 'betrybe/sd-0x-mysql-all-for-one-tests'
@@ -50,7 +41,6 @@ jobs:
 
       - name: Store evaluation step
         uses: betrybe/store-evaluation-action@v2
-        if: steps.wait-for-build.outputs.conclusion == 'success'
         with:
           evaluation-data: ${{ steps.evaluator.outputs.result }}
           environment: staging
