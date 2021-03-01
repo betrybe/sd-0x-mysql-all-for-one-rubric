@@ -1,30 +1,25 @@
 const { readFileSync } = require('fs');
-const { Sequelize } = require('sequelize');
-const Importer = require('mysql-import');
+const Importer = require('./importer');
 
 describe('Desafios de manipulação de tabelas', () => {
   let importer;
   let sequelize;
 
   beforeAll(() => {
-    jest.setTimeout(100000);
-    importer = new Importer(
-      { user: process.env.MYSQL_USER, password: process.env.MYSQL_PASSWORD, host: process.env.HOSTNAME }
-    );
-
-    sequelize = new Sequelize(
-      `mysql://${process.env.MYSQL_USER}:${process.env.MYSQL_PASSWORD}@${process.env.HOSTNAME}:3306/`
-    );
+    Importer((imp, seq) => {
+      importer = imp;
+      sequelize = seq;
+    });
   });
 
   afterAll(() => {
-    importer.disconnect();
     sequelize.close();
   });
 
   beforeEach(async () => {
     await importer.import('./northwind.sql');
     await sequelize.query('USE northwind;', { type: 'RAW' });
+    importer.disconnect();
   });
 
   afterEach(async () => await sequelize.query('DROP DATABASE northwind;', { type: 'RAW' }));

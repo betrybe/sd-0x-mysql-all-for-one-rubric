@@ -1,13 +1,17 @@
 const { readFileSync } = require('fs');
-const importer = require('./importer');
-// const { Sequelize } = require('sequelize');
-// const Importer = require('mysql-import');
+const Importer = require('./importer');
 
 describe('Desafios sobre filtragem de dados', () => {
   let sequelize;
 
   beforeAll(async () => {
-    sequelize = await importer();
+    let importer;
+    Importer(async (imp, seq) => {
+      importer = imp;
+      sequelize = seq;
+    });
+    await importer.import('./northwind.sql');
+    importer.disconnect();
   });
 
   afterAll(async () => {
