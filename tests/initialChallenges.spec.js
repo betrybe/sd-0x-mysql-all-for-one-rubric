@@ -12,10 +12,10 @@ describe('Desafios iniciais', () => {
 
     await importer.import('./northwind.sql');
     importer.disconnect();
-  });
 
-  beforeEach(async () => {
-    await sequelize.query('USE northwind;', { type: 'RAW' });
+    sequelize = new Sequelize(
+      `mysql://${process.env.MYSQL_USER}:${process.env.MYSQL_PASSWORD}@${process.env.HOSTNAME}:3306/northwind`
+    );
   });
 
   afterAll(async () => {
