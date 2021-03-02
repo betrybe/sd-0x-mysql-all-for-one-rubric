@@ -3,23 +3,9 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  eslint:
-    name: eslint
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1.4.4
-        with:
-          node-version: '12'
-      - name: ESLint
-        uses: betrybe/eslint-linter-action@v2.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
   evaluator_job:
     name: Evaluator Job
     runs-on: ubuntu-18.04
-    needs: [eslint]
     services:
       mysql:
         image: mysql:5.7
@@ -34,7 +20,7 @@ jobs:
         id: evaluator
         with:
           repository-test-name: 'betrybe/sd-0x-mysql-all-for-one-tests'
-          repository-test-branch: 'master'
+          repository-test-branch: 'branch_bruno'
         env:
           MYSQL_USER: 'root'
           MYSQL_PASSWORD: 'password'
