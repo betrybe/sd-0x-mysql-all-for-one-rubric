@@ -17,6 +17,7 @@ describe('Desafios de manipulação de tabelas', () => {
   });
 
   afterAll(() => {
+    importer.disconnect();
     sequelize.close();
   });
 
