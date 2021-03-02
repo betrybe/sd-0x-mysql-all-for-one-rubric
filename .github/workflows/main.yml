@@ -29,7 +29,7 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Evaluator Step
-        uses: betrybe/jest-evaluator-action@v5
+        uses: betrybe/jest-evaluator-action@v7
         id: evaluator
         with:
           repository-test-name: 'betrybe/sd-0x-mysql-all-for-one-tests'
