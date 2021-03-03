@@ -24,7 +24,7 @@ describe('Desafios iniciais', () => {
     sequelize.close();
   });
 
-  describe('1 - Exiba apenas os nomes do produtos na tabela `products`.`', () => {
+  describe('1 - Exiba apenas os nomes do produtos na tabela `products`.', () => {
     it('Verifica o desafio1', async () => {
       const challengeQuery = readFileSync('desafio1.sql', 'utf8').trim();
       const expectedResult = require('./challengesResults/challengeResult1');
@@ -42,7 +42,7 @@ describe('Desafios iniciais', () => {
     });
   });
 
-  describe('3 - Escreva uma query que exiba os valores da coluna que representa a primary key da tabela `products`', () => {
+  describe('3 - Escreva uma query que exiba os valores da coluna que representa a primary key da tabela `products`.', () => {
     it('Verifica o desafio3', async () => {
       const challengeQuery = readFileSync('desafio3.sql', 'utf8').trim();
       const expectedResult = require('./challengesResults/challengeResult3');
